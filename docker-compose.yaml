@@ -1,0 +1,23 @@
+version: '3.9'
+
+services:
+  splunk-builder:
+    image: splunk/splunk:latest
+    hostname: splunk-builder
+    environment:
+      - SPLUNK_START_ARGS=--accept-license
+      - SPLUNK_PASSWORD=$SPLUNK_PASSWORD
+      - SPLUNK_LICENSE_URI=/splunk.license
+      - SPLUNK_APPS_URL=https://splunkbase.splunk.com/app/2962/release/4.1.4/download,https://splunkbase.splunk.com/app/1621/release/5.3.1/download
+      - SPLUNKBASE_USERNAME=$SPLUNKBASE_USERNAME
+      - SPLUNKBASE_PASSWORD=$SPLUNKBASE_PASSWORD
+    ports:
+      - 8000:8000
+    volumes:
+      - splunk-etc:/opt/splunk/etc
+      - splunk-var:/opt/splunk/var
+      - ./license/splunk.license:/splunk.license
+
+volumes:
+  splunk-etc:
+  splunk-var:
